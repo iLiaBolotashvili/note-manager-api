@@ -4,6 +4,8 @@ const cors = require("cors");
 
 const server = express();
 
+const db = require("./models");
+
 var corsOptions = {
   origin: "http://localhost:4001"
 };
@@ -13,6 +15,13 @@ server.use(cors(corsOptions));
 server.use(bodyParser.json());
 
 server.use(bodyParser.urlencoded({ extended: true }));
+
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Db');
+});
+
+//routes
+require('./routes/auth')(server);
 
 server.get("/", (req, res) => {
   res.json({ message: "note-manager-api server running." });
