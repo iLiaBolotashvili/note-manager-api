@@ -7,7 +7,7 @@ const server = express();
 const db = require("./models");
 
 var corsOptions = {
-  origin: "http://localhost:4001"
+  origin: "http://localhost:3000"
 };
 
 server.use(cors(corsOptions));
@@ -22,6 +22,7 @@ db.sequelize.sync({force: true}).then(() => {
 
 //routes
 require('./routes/auth')(server);
+require('./routes/note')(server);
 
 server.get("/", (req, res) => {
   res.json({ message: "note-manager-api server running." });

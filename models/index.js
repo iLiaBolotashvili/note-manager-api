@@ -26,5 +26,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("../models/user.js")(sequelize, Sequelize);
+db.note = require("../models/note.js")(sequelize, Sequelize);
+
+// Define user to notes relationship
+db.user.hasMany(db.note, { as: 'notes', foreignKey: 'userId' });
+db.note.belongsTo(db.user, { as: 'user', foreignKey: 'userId' });
 
 module.exports = db;
