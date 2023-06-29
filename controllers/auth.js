@@ -8,7 +8,7 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  // Save User to Database
+  // Save user to database
   User.create({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 8)
@@ -22,6 +22,7 @@ exports.signup = (req, res) => {
 };
 
 exports.signin = (req, res) => {
+  // Find user
   User.findOne({
     where: {
       username: req.body.username
@@ -45,7 +46,7 @@ exports.signin = (req, res) => {
       }
 
       var token = jwt.sign({ id: user.id }, config.secret, {
-        expiresIn: 86400 // 24 hours
+        expiresIn: 43200 // 12 hours
       });
       
       res.status(200).send({

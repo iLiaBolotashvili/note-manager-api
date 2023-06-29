@@ -1,8 +1,8 @@
 //configure database.
 module.exports = {
     HOST: "localhost",
-    USER: "db_user",
-    PASSWORD: "db_password",
+    USER: "postgres",
+    PASSWORD: "warloka123",
     DB: "note_manager_db",
     dialect: "postgres",
     pool: {
