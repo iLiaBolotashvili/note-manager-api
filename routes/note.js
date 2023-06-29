@@ -10,7 +10,6 @@ module.exports = function(server) {
     next();
   });
 
-  // Post new note
   server.post('/api/notes/post/:userId', [authJwt.verifyToken], async (req, res) => {
       const { userId } = req.params; 
       const { title, content } = req.body; 
@@ -30,7 +29,6 @@ module.exports = function(server) {
       }
     });
 
-    // Get notes associated with user
     server.get('/api/notes/get/:userId', [authJwt.verifyToken], async (req, res) => {
 
       const { userId } = req.params; 
@@ -51,25 +49,4 @@ module.exports = function(server) {
       }
 
     });
-
-    // Delete note route
-    server.delete('/api/notes/delete/:id', [authJwt.verifyToken], async (req, res) => {
-      const noteId  = req.params.id;
-      
-      try {
-        const note = await db.note.findByPk(noteId)
-
-        if (!note) {
-          return res.status(404).json({ error: 'Note not found' });
-        }
-
-        await note.destroy();
-
-        res.status(204).send(); // Successful deletion
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error' });
-      }
-    });
-
   };
